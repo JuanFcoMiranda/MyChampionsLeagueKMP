@@ -1,5 +1,7 @@
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.window.ComposeUIViewController
 
-actual fun getPlatformName(): String = "iOS"
-
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
 fun MainViewController() = ComposeUIViewController { App() }

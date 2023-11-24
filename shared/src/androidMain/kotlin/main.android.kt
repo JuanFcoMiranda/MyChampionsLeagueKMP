@@ -1,5 +1,8 @@
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 
-actual fun getPlatformName(): String = "Android"
-
-@Composable fun MainView() = App()
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
+@Composable
+fun MainView() = App()

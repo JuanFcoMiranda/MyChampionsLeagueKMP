@@ -1,41 +1,42 @@
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
+import tabs.TabItem
+import tabs.Tabs
+import tabs.TabsContent
 
-@OptIn(ExperimentalResourceApi::class)
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
 @Composable
 fun App() {
+    val tabs = listOf(TabItem.Menu, TabItem.History, TabItem.About)
+    val navigate: (String) -> Unit = { }
+    val pagerState = rememberPagerState(
+        pageCount = { tabs.size },
+        initialPage = 0
+    )
+
     MaterialTheme {
-        var greetingText by remember { mutableStateOf("Hello, World!") }
-        var showImage by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = {
-                greetingText = "Hello, ${getPlatformName()}"
-                showImage = !showImage
-            }) {
-                Text(greetingText)
-            }
-            AnimatedVisibility(showImage) {
-                Image(
-                    painterResource("compose-multiplatform.xml"),
-                    null
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    //title = { Text(stringResource(MR.)) }
+                    title = { Text("Hello") }
                 )
+            },
+        ) { padding ->
+            Column(modifier = Modifier.padding(padding)) {
+                Tabs(tabs = tabs, pagerState = pagerState)
+                TabsContent(tabs = tabs, pagerState = pagerState, navigate)
             }
         }
     }
 }
-
-expect fun getPlatformName(): String
